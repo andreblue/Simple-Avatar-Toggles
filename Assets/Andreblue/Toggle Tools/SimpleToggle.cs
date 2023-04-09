@@ -1,12 +1,8 @@
 ﻿#if UNITY_EDITOR
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 using VRC.SDK3.Avatars.Components;
 using UnityEditor.Animations;
 using UnityEditor;
-using AnimatorAsCode.V0;
 
 namespace Andreblue.ToggleTools
 {
@@ -21,7 +17,8 @@ namespace Andreblue.ToggleTools
     [CustomEditor(typeof(SimpleToggle), true)]
     public class SimpleToggle_Editor : Editor
     {
-        private const string Name = "SP";
+        private const string Name = "ToggleTools_Simple";
+        private const string LayerPrefix = "Toggle";
 
         public override void OnInspectorGUI ()
         {
@@ -32,12 +29,12 @@ namespace Andreblue.ToggleTools
         {
             var selectedObject = (SimpleToggle)target;
             var acc = ToggleTools.AnimEditor(Name, selectedObject.avatar, selectedObject.assetContainer, selectedObject.assetKey, selectedObject.writeDefaults);
-            var fx = acc.CreateSupportingFxLayer($"Toggle_{target.name}");//acc.CreateMainFxLayer();
-            var toggleOff = fx.NewState($"Toggle_{target.name}_Off")
-            .WithAnimation(acc.NewClip().Toggling(selectedObject.gameObject, false));
-            var toggleOn = fx.NewState($"Toggle_{target.name}_On")
-            .WithAnimation(acc.NewClip().Toggling(selectedObject.gameObject, true));
-            var toggleBool = fx.BoolParameter($"{Name}_Toggle_{target.name}");
+            var fx = acc.CreateSupportingFxLayer($"{LayerPrefix}_{target.name}");
+            var toggleOff = fx.NewState($"{LayerPrefix}_{target.name}_Off")
+                .WithAnimation(acc.NewClip().Toggling(selectedObject.gameObject, false));
+            var toggleOn = fx.NewState($"{LayerPrefix}_{target.name}_On")
+                .WithAnimation(acc.NewClip().Toggling(selectedObject.gameObject, true));
+            var toggleBool = fx.BoolParameter($"{Name}_{LayerPrefix}_{target.name}");
 
             toggleOff.TransitionsTo(toggleOn).When(toggleBool.IsTrue());
             toggleOn.TransitionsTo(toggleOff).When(toggleBool.IsFalse());
@@ -46,7 +43,7 @@ namespace Andreblue.ToggleTools
         {
             var selectedObject = (SimpleToggle)target;
             var acc = ToggleTools.AnimEditor(Name, selectedObject.avatar, selectedObject.assetContainer, selectedObject.assetKey, selectedObject.writeDefaults);
-            acc.RemoveAllSupportingLayers($"Toggle_{target.name}");
+            acc.RemoveAllSupportingLayers($"{LayerPrefix}_{target.name}");
         }
     }
 }
