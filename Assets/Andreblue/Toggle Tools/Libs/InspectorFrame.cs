@@ -3,9 +3,6 @@ using UnityEditor;
 
 using UnityEngine;
 using System;
-using AnimatorAsCode.V0;
-using VRC.SDK3.Avatars.Components;
-using AnimatorController = UnityEditor.Animations.AnimatorController;
 
 namespace Andreblue.ToggleTools
 {
@@ -20,7 +17,6 @@ namespace Andreblue.ToggleTools
                 prop.stringValue = GUID.Generate().ToString();
                 s_Object.ApplyModifiedProperties();
             }
-
             editor.DrawDefaultInspector();
 
             if (GUILayout.Button("Create")) createFunc.Invoke();
