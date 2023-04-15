@@ -9,7 +9,7 @@ using AnimatorController = UnityEditor.Animations.AnimatorController;
 
 namespace Andreblue.ToggleTools
 {
-    public static class ToggleTools
+    public static class ToggleToolsGUI
     {
         //Using a ton of things from https://github.com/hai-vr/av3-animator-as-code/blob/main/Examples/AacExample.cs
         public static void InsecptorWindow(Editor editor, SerializedObject s_Object, string anim_Prefix, Action createFunc, Action removeFunc = null, Action resetApplied = null)
@@ -26,23 +26,6 @@ namespace Andreblue.ToggleTools
             if (GUILayout.Button("Create")) createFunc.Invoke();
             if (removeFunc != null && GUILayout.Button("Remove")) removeFunc.Invoke();
             if (resetApplied != null && GUILayout.Button("Reset Applied")) resetApplied.Invoke();
-        }
-        public static AacFlBase AnimEditor(string systemName, VRCAvatarDescriptor avatar, AnimatorController assetContainer, string assetKey, bool writeDefaults = false)
-        {
-            var animCode = AacV0.Create(new AacConfiguration
-            {
-                SystemName = systemName,
-                AvatarDescriptor = avatar,
-                AnimatorRoot = avatar.transform,
-                DefaultValueRoot = avatar.transform,
-                AssetContainer = assetContainer,
-                AssetKey = assetKey,
-                DefaultsProvider = new AacDefaultsProvider(writeDefaults: writeDefaults)
-
-            });
-            animCode.ClearPreviousAssets();
-
-            return animCode;
         }
     }
     

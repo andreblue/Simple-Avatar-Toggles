@@ -24,20 +24,20 @@ namespace Andreblue.ToggleTools
 
         public override void OnInspectorGUI()
         {
-            ToggleTools.InsecptorWindow(this, serializedObject, "assetKey", Create, Remove);
+            ToggleToolsGUI.InsecptorWindow(this, serializedObject, "assetKey", Create, Remove);
         }
 
         private void Create()
         {
             var selectedObject = (DissolveToggle)target;
-            var acc = ToggleTools.AnimEditor(Name, selectedObject.avatar, selectedObject.assetContainer, selectedObject.assetKey, selectedObject.writeDefaults);
+            var acc = ToggleToolsUtil.AnimEditor(Name, selectedObject.avatar, selectedObject.assetContainer, selectedObject.assetKey, selectedObject.writeDefaults);
             GameObject meshToEdit = selectedObject.gameObject;
 
         }
         private void Remove()
         {
             /*var selectedObject = (SimpleToggle)target;
-            var acc = ToggleTools.AnimEditor(Name, selectedObject.avatar, selectedObject.assetContainer, selectedObject.assetKey, selectedObject.writeDefaults);
+            var acc = ToggleToolsUtil.AnimEditor(Name, selectedObject.avatar, selectedObject.assetContainer, selectedObject.assetKey, selectedObject.writeDefaults);
             acc.RemoveAllSupportingLayers($"{LayerPrefix}_{target.name}");*/
         }
     }

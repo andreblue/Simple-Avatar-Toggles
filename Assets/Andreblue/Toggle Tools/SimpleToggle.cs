@@ -36,14 +36,14 @@ namespace Andreblue.ToggleTools
 
         public override void OnInspectorGUI ()
         {
-            ToggleTools.InsecptorWindow(this, serializedObject, "assetKey", Create, Remove, ClearApplied);
+            ToggleToolsGUI.InsecptorWindow(this, serializedObject, "assetKey", Create, Remove, ClearApplied);
         }
 
         private void Create ()
         {
             var selectedObject = (SimpleToggle)target;
             if (selectedObject.getApplied()) return;
-            var acc = ToggleTools.AnimEditor(Name, selectedObject.avatar, selectedObject.assetContainer, selectedObject.assetKey, selectedObject.writeDefaults);
+            var acc = ToggleToolsUtil.AnimEditor(Name, selectedObject.avatar, selectedObject.assetContainer, selectedObject.assetKey, selectedObject.writeDefaults);
             var fx = acc.CreateSupportingFxLayer($"{LayerPrefix}_{target.name}");
             var toggleOff = fx.NewState($"{LayerPrefix}_{target.name}_Off")
                 .WithAnimation(acc.NewClip().Toggling(selectedObject.gameObject, false));
@@ -60,7 +60,7 @@ namespace Andreblue.ToggleTools
         {
             var selectedObject = (SimpleToggle)target;
             if (!selectedObject.getApplied()) return;
-            var acc = ToggleTools.AnimEditor(Name, selectedObject.avatar, selectedObject.assetContainer, selectedObject.assetKey, selectedObject.writeDefaults);
+            var acc = ToggleToolsUtil.AnimEditor(Name, selectedObject.avatar, selectedObject.assetContainer, selectedObject.assetKey, selectedObject.writeDefaults);
             acc.RemoveAllSupportingLayers($"{LayerPrefix}_{target.name}");
             selectedObject.toggleApplied();
         }
